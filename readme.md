@@ -51,3 +51,6 @@ entries.json 结构
 - diff -- 对比当前时间与磁盘文件的差异
   - https://github.com/rtfpessoa/diff2html
   - https://github.com/danday74/git-diff
+
+## todo
+- [ ] 双击文件名时, 自动选择最新时间节点

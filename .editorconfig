@@ -1,0 +1,15 @@
+# 配置参考: https://EditorConfig.org
+# 插件列表: https://editorconfig.org/#download
+
+# 表示这是项目最上层的 EditorConfig 文件
+root = true
+
+[*]
+indent_style = space
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
