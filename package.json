@@ -2,38 +2,55 @@
   "name": "vscode-file-recovery",
   "version": "0.1.0",
   "private": true,
+  "description": "Restore all code files from vscode's History directory.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/wll8/vscode-file-recovery.git"
+  },
   "scripts": {
     "dev": "concurrently npm:client npm:http npm:proxy",
     "client": "cross-env VUE_APP_ENV=dev vue-cli-service serve",
     "http": "npx nodemon --watch server/index.js --exec node server/index.js",
-    "build": "cross-env VUE_APP_ENV=prod vue-cli-service build --report",
+    "build:report": "cross-env VUE_APP_ENV=prod vue-cli-service build --report",
+    "build": "cross-env VUE_APP_ENV=prod vue-cli-service build",
     "proxy": "npx http-server - -p 8079 -c-1 --cors --proxy http://127.0.0.1:8081",
     "build:test": "cross-env VUE_APP_ENV=test vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
+  "keywords": [
+    "vscode",
+    "file recovery"
+  ],
+  "bin": {
+    "vscode-file-recovery": "server/index.js"
+  },
+  "files": [
+    "server",
+    "img",
+    "dist"
+  ],
   "dependencies": {
-    "@jledentu/vue-finder": "^2.0.1",
-    "axios": "^0.21.1",
-    "babel-plugin-component": "^1.1.1",
-    "core-js": "^3.10.1",
-    "element-ui": "^2.13.2",
     "express": "^4.18.2",
+    "get-port": "^6.1.2",
+    "globby": "^11.1.0",
     "normalize-path": "^3.0.0",
-    "redaxios": "^0.5.1",
-    "vue": "^2.6.12",
-    "vue-router": "^3.5.1",
-    "vuex": "^3.6.2"
+    "opener": "^1.5.2"
   },
   "devDependencies": {
+    "@jledentu/vue-finder": "^2.0.1",
     "@vue/cli-plugin-babel": "^4.5.12",
     "@vue/cli-plugin-eslint": "^4.5.12",
     "@vue/cli-plugin-router": "^4.5.12",
     "@vue/cli-plugin-vuex": "^4.5.12",
     "@vue/cli-service": "^4.5.12",
     "@vue/eslint-config-prettier": "^6.0.0",
+    "axios": "^0.21.1",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-component": "^1.1.1",
     "concurrently": "^7.6.0",
+    "core-js": "^3.10.1",
     "cross-env": "^7.0.3",
+    "element-ui": "^2.13.2",
     "eslint": "^6.8.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^6.2.2",
@@ -43,8 +60,11 @@
     "nodemon": "^2.0.21",
     "prettier": "^2.2.1",
     "style-resources-loader": "^1.4.1",
+    "vue": "^2.6.12",
     "vue-cli-plugin-style-resources-loader": "^0.1.5",
-    "vue-template-compiler": "^2.6.12"
+    "vue-router": "^3.5.1",
+    "vue-template-compiler": "^2.6.12",
+    "vuex": "^3.6.2"
   },
   "eslintConfig": {
     "root": true,
