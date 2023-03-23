@@ -18,7 +18,11 @@
       <i class="el-icon-time"></i>
     </span>
     <span>
-      {{ item.label }}
+      {{
+        item.type === `time`
+          ? $util.dateFormat(`YYYY-MM-DD hh:mm:ss`, item.label)
+          : item.label
+      }}
     </span>
     <!-- 使用 md5 标记当前已恢复的位置 el-icon-location-information -->
     <!-- 要恢复到的位置 el-icon-finished -->

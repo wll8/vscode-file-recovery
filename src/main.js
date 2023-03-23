@@ -3,6 +3,7 @@ import http from '@/http/index.js'
 import util from '@/util/index.js'
 import App from '@/App.vue'
 import {
+  Loading,
   Form,
   FormItem,
   Select,
@@ -23,6 +24,7 @@ Vue.config.productionTip = false
 Vue.use(http)
 
 Vue.use(Form)
+Vue.use(Loading)
 Vue.use(FormItem)
 Vue.use(Select)
 Vue.use(Option)

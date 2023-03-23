@@ -3,7 +3,7 @@
 node_modules
 /dist
 /httpData
-
+re-store
 
 # local env files
 .env.local

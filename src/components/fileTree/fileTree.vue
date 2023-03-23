@@ -1,39 +1,73 @@
 <template>
   <div class="com-fileTree">
-    <h1>vscode file recovery</h1>
     <div class="action">
-      <el-form :inline="true" :model="form" class="demo-form-inline">
-        <el-form-item label="">
-          <el-select v-model="form.in" placeholder="选择搜索范围">
-            <el-option label="所有目录" value="所有目录"></el-option>
+      <el-form
+        :inline="true"
+        label-width="200px"
+        :model="form"
+        class="demo-form-inline"
+      >
+        <el-form-item label="where to save">
+          <el-input
+            style="width: 960px"
+            v-model="form.toDir"
+            placeholder="Save to the re-store directory"
+          >
+          </el-input>
+        </el-form-item>
+        <br />
+        <el-form-item label="vscode history directory">
+          <el-input
+            style="width: 860px"
+            v-model="form.historyPath"
+            placeholder="Scan from common directories"
+          >
+          </el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button icon="el-icon-search" @click="scan">scan</el-button>
+        </el-form-item>
+        <br />
+        <el-form-item label="filter from scan results">
+          <el-select v-model="form.in" placeholder="select search scope">
+            <el-option label="all directories" value="所有目录"></el-option>
             <el-option
               :disabled="curDir === ``"
-              label="当前目录"
+              label="Current directory"
               value="当前目录"
             ></el-option>
             <el-option
               :disabled="curFile === ``"
-              label="当前文件"
+              label="current file"
               value="当前文件"
             ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="">
-          <el-select v-model="form.type" placeholder="选择搜索类型">
-            <el-option label="文件名或内容" value="文件名或内容"></el-option>
-            <el-option label="文件名" value="文件名"></el-option>
-            <el-option label="文件内容" value="文件内容"></el-option>
+          <el-select v-model="form.type" placeholder="select search type">
+            <el-option
+              label="filename or content"
+              value="文件名或内容"
+            ></el-option>
+            <el-option label="file name" value="文件名"></el-option>
+            <el-option label="document content" value="文件内容"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="">
-          <el-input v-model="form.text" placeholder="搜索"></el-input>
+          <el-input
+            style="width: 409px"
+            v-model="form.text"
+            placeholder="filter"
+          ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button icon="el-icon-search">搜索</el-button>
+          <el-button icon="el-icon-search">filter</el-button>
         </el-form-item>
       </el-form>
     </div>
     <Finder
+      v-loading="loading.scan"
+      element-loading-text="scanning..."
       class="tree-container"
       ref="finder"
       :tree="tree"
@@ -61,7 +95,11 @@
             :key="item.id"
             @click="() => $refs.finder.expand(item.id)"
           >
-            {{ item.label }}
+            {{
+              item.type === `time`
+                ? $util.dateFormat(`YYYY-MM-DD hh:mm:ss`, item.label)
+                : item.label
+            }}
           </div>
         </div>
       </div>
@@ -96,11 +134,21 @@ export default {
       drawer: false,
       textarea: ``,
       form: {
+        toDir: ``, // 要另存到什么位置
+        historyPath: ``, // 历史文件存储位置
         in: ``, // 搜索位置
         type: ``, // 搜索类型
         text: ``, // 用户输入的字符
         curDir: ``,
         curFile: ``,
+      },
+      loading: {
+        scan: true,
+      },
+      fileData: {
+        toDir: ``,
+        historyPath: ``,
+        list: [],
       },
       selectIdPath: [],
       tree: {},
@@ -108,6 +156,7 @@ export default {
     }
   },
   async created() {
+    this.scan()
     msg.$on(`event`, (type, data) => {
       setTimeout(() => {
         console.log({ type, data }, this.selectIdPath)
@@ -173,15 +222,13 @@ export default {
     },
   },
   watch: {
-    '$attrs.fileData': {
+    fileData: {
       immediate: true,
-      handler(val) {
-        this.tree = { id: `root`, children: val }
-        this.$nextTick(() => {
-          // this.$refs.finder.expand(
-          //   `C:/Users/win/AppData/Roaming/Code/User/History/-126abc21/rjpI.vue`
-          // )
-        })
+      handler(val = {}) {
+        const { list, historyPath, toDir } = val
+        this.tree = { id: `root`, children: list }
+        this.form.historyPath = historyPath
+        this.form.toDir = toDir
       },
     },
     curTime: {
@@ -197,6 +244,21 @@ export default {
     },
   },
   methods: {
+    scan() {
+      this.fileData = {}
+      this.loading.scan = true
+      this.$http
+        .get(`/api/fileData`)
+        .then((res) => {
+          this.fileData = res
+        })
+        .catch((err) => {
+          console.log(`errerr`, err)
+        })
+        .finally(() => {
+          this.loading.scan = false
+        })
+    },
     onExpand({ expanded, sourceEvent }) {
       // console.log(`expanded`, expanded)
       this.selectIdPath = expanded

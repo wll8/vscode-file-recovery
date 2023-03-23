@@ -1,6 +1,6 @@
 <template>
   <div class="test">
-    <fileTree :fileData="fileData" />
+    <fileTree />
   </div>
 </template>
 <script>
@@ -9,14 +9,9 @@ import fileTree from '@/components/fileTree/fileTree.vue'
 export default {
   name: `Test`,
   data() {
-    return {
-      fileData: [],
-    }
+    return {}
   },
-  async created() {
-    const httpData = await this.$http.get(`/api/fileData`)
-    this.fileData = httpData
-  },
+  async created() {},
   components: {
     fileTree,
   },
