@@ -1,4 +1,4 @@
-从 vscode 的 History 目录中恢复所有代码文件.
+Restore all code files from vscode's History directory.
 
 
 <p align="center">
@@ -6,9 +6,19 @@
   <img src="./img/20230303133634.png" width="40%">
 </p>
 
-## 为什么?
+## Use?
 
-某一天我的数据盘坏了, 从硬盘修复和从 git 恢复都不再可能. 庆幸的是 vscode 的 History 目录中还保存着蛛丝马迹. 这个项目可以分析这些文件, 忽然恢复最初的项目结构.
+``` sh
+# Install
+npm i -g vscode-file-recovery
+
+# Use
+vscode-file-recovery
+```
+
+## Why?
+
+One day my data disk was broken, and it was no longer possible to repair it from the hard disk or restore it from git. Fortunately, there are still clues in the History directory of vscode. This project can analyze these files and suddenly restore the original project structure.
 
 ## License
 
