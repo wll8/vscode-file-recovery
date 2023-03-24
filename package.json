@@ -1,6 +1,6 @@
 {
   "name": "vscode-file-recovery",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "description": "Restore all code files from vscode's History directory.",
   "repository": {
