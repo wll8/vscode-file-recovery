@@ -86,12 +86,6 @@ function scan({ historyPath, toDir } = {}) {
       encoding: `binary`,
     })
     fs.writeFileSync(data.rresource, binary, { encoding: `binary` })
-
-    // data.entries = data.entries.map(item => {
-    //   item.path = `${dir}/${item.id}`
-    //   item.date = util.dateFormat(`YYYY-MM-DD hh:mm:ss`, new Date(item.timestamp))
-    //   return item
-    // })
     return data
   })
 

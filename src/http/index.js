@@ -3,7 +3,7 @@ import util from '@/util/index.js'
 import axios from 'axios'
 
 const api = axios.create({
-  timeout: 10000, // 请求超时
+  timeout: 0, // 请求超时
   baseURL: config.baseApi,
 })
 
